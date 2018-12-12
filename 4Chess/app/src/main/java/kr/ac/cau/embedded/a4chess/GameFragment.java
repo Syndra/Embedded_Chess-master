@@ -29,6 +29,8 @@ public class GameFragment extends Fragment {
     private TextView gameStatusView;
     private static Button queenSideCastlingButton;
     private static Button kingSideCastlingButton;
+    public static boolean castIf = false;
+    public static String castUpdate;
 
     public GameFragment() {
         // Required empty public constructor
@@ -74,6 +76,13 @@ public class GameFragment extends Fragment {
                 if(Board_ConditionChecker.getQueenSideCastlingCoordinatePair(Game.myPlayerId) != null){
                     Board.queenSideCastling(Game.myPlayerId);
                     BoardView.view.invalidate();
+                    String castMsg = "Q" + Game.myPlayerId + "(info_QKca)";
+                    if (MainActivity.nickName == "Player1") {
+                        MainActivity.serverSend(castMsg);
+                    }
+                    else {
+                        MainActivity.clientSend(castMsg);
+                    }
                 }
             }
         });
@@ -85,6 +94,13 @@ public class GameFragment extends Fragment {
                 if(Board_ConditionChecker.getKingSideCastlingCoordinatePair(Game.myPlayerId) != null) {
                     Board.kingSideCastling(Game.myPlayerId);
                     BoardView.view.invalidate();
+                    String castMsg = "K" + Game.myPlayerId;
+                    if (MainActivity.nickName == "Player1") {
+                        MainActivity.serverSend(castMsg);
+                    }
+                    else {
+                        MainActivity.clientSend(castMsg);
+                    }
                 }
             }
         });
@@ -93,6 +109,17 @@ public class GameFragment extends Fragment {
             while(true){
                 try{
                     updateTurn();
+                    if (castIf) {
+                        castIf = false;
+                        if (castUpdate.charAt(0) == 'Q') {
+                            Board.queenSideCastling(castUpdate.substring(1));
+                            BoardView.view.invalidate();
+                        }
+                        else if (castUpdate.charAt(0) == 'K') {
+                            Board.kingSideCastling(castUpdate.substring(1));
+                            BoardView.view.invalidate();
+                        }
+                    }
                     Thread.sleep(500);
                 }
                 catch (Exception e){

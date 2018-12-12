@@ -268,8 +268,8 @@ public class MainActivity extends AppCompatActivity {
                     else if (msg.charAt(tokenIndex + 6) == 'm') { // chat status (TAG : (info_mesg))
                         inputMsgChat(msg.substring(msg.lastIndexOf('P'), tokenIndex));
                     }
-                    else if (msg.charAt(tokenIndex + 6) == '-') { // other status (Add by needs)
-                        // TODO implement additional token
+                    else if (msg.charAt(tokenIndex + 6) == 'Q') { // other status (Add by needs)
+                        inputMsgCast(msg.substring(msg.lastIndexOf('P'), tokenIndex));
                     }
                     ///////////////// Refresh Part /////////////////
                     // RoomFragment.test_update_display(serverMsg.toString());
@@ -301,8 +301,8 @@ public class MainActivity extends AppCompatActivity {
                     else if (clientMsg.charAt(tokenIndex + 6) == 'm') { // chat status (TAG : (info_mesg))
                         inputMsgChat(clientMsg.substring(clientMsg.lastIndexOf('P'), tokenIndex));
                     }
-                    else if (clientMsg.charAt(tokenIndex + 6) == '-') { // other status (Add by needs)
-                        // TODO implement additional token
+                    else if (clientMsg.charAt(tokenIndex + 6) == 'Q') { // other status (Add by needs)
+                        inputMsgCast(clientMsg.substring(clientMsg.lastIndexOf('P'), tokenIndex));
                     }
                     clientMsgBuilder.append(clientMsg); // MSG LOG DISPLAY (TEST)
                     ///////////////// Refresh Part /////////////////
@@ -337,7 +337,8 @@ public class MainActivity extends AppCompatActivity {
         ChatFragment.receivedMessage = chatContent;
     }
 
-    private static void inputMsgOther(String s) {
-        // no decision
+    private static void inputMsgCast(String s) {
+        GameFragment.castIf = true;
+        GameFragment.castUpdate = s;
     }
 }
