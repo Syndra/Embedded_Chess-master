@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +72,20 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
+        final LinearLayout shortcutText = (LinearLayout) view.findViewById(R.id.shortcut_text);
+        final Button slideBtn = (Button) view.findViewById(R.id.slide_btn);
+        slideBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(shortcutText.getVisibility() == View.VISIBLE) {
+                    shortcutText.setVisibility(View.GONE);
+                    slideBtn.setText("SHOW");
+                } else {
+                    shortcutText.setVisibility(View.VISIBLE);
+                    slideBtn.setText("HIDE");
+                }
+            }
+        });
         chatMessages = new ArrayList<>();
         listView = (ListView) view.findViewById(R.id.chat_list);
         adapter = new MessageAdapter(getActivity(), R.layout.fragment_chat, chatMessages);
