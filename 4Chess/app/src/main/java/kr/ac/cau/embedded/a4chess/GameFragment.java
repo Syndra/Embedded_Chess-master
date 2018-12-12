@@ -110,7 +110,6 @@ public class GameFragment extends Fragment {
                 try{
                     updateTurn();
                     if (castIf) {
-                        castIf = false;
                         if (castUpdate.charAt(0) == 'Q') {
                             Board.queenSideCastling(castUpdate.substring(1));
                             BoardView.view.invalidate();
@@ -119,6 +118,7 @@ public class GameFragment extends Fragment {
                             Board.kingSideCastling(castUpdate.substring(1));
                             BoardView.view.invalidate();
                         }
+                        castIf = false;
                     }
                     Thread.sleep(500);
                 }
