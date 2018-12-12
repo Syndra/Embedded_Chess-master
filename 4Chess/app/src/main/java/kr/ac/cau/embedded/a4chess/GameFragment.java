@@ -94,7 +94,7 @@ public class GameFragment extends Fragment {
                 if(Board_ConditionChecker.getKingSideCastlingCoordinatePair(Game.myPlayerId) != null) {
                     Board.kingSideCastling(Game.myPlayerId);
                     BoardView.view.invalidate();
-                    String castMsg = "K" + Game.myPlayerId;
+                    String castMsg = "K" + Game.myPlayerId + "(info_QKca)";
                     if (MainActivity.nickName == "Player1") {
                         MainActivity.serverSend(castMsg);
                     }

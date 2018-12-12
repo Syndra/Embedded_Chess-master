@@ -339,6 +339,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static void inputMsgCast(String s) {
         GameFragment.castIf = true;
-        GameFragment.castUpdate = s;
+        GameFragment.castUpdate = s.substring(10);
     }
 }
