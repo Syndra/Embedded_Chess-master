@@ -102,22 +102,22 @@ public class RoomFragment extends Fragment {
         }).start();
 
 
-//        testButton.setOnClickListener(new View.OnClickListener() { // Test
-//            @Override
-//            public void onClick(View v) { //★★ TODO : May be refresh button OR Update Directly
-//                //((MainActivity) getActivity()).clientSend("test(info_mesg)"); // simple test
-//                if(playerItems.size() < 4) {
-//                    Player player = new Player(playerNum.toString(), playerNum / 2,
-//                            PLAYER_COLOR[playerNum], "Player" + (++playerNum), clientIP.substring(1));
-//                    playerItems.add(player);
-//                    playerListAdapter.notifyDataSetChanged();
-//                    MainActivity.serverSend(playerNum.toString() + "(info_client)");
-//                }
-//                if(playerItems.size() == 4) {
-//                    startButton.setVisibility(View.VISIBLE);
-//                }
-//            }
-//        });
+        testButton.setOnClickListener(new View.OnClickListener() { // Test
+            @Override
+            public void onClick(View v) { //★★ TODO : May be refresh button OR Update Directly
+                //((MainActivity) getActivity()).clientSend("test(info_mesg)"); // simple test
+                if(playerItems.size() < 4) {
+                    Player player = new Player(playerNum.toString(), playerNum / 2,
+                            PLAYER_COLOR[playerNum], "Player" + (++playerNum), clientIP.substring(1));
+                    playerItems.add(player);
+                    playerListAdapter.notifyDataSetChanged();
+                    MainActivity.serverSend(playerNum.toString() + "(info_client)");
+                }
+                if(playerItems.size() == 4) {
+                    startButton.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         startButton = (Button)view.findViewById(R.id.start_button);
         startButton.setOnClickListener(new View.OnClickListener() {

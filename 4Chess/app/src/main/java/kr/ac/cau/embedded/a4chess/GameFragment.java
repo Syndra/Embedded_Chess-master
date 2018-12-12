@@ -89,7 +89,18 @@ public class GameFragment extends Fragment {
             }
         });
 
-        updateTurn();
+        new Thread(new Runnable() { @Override public void run() {
+            while(true){
+                try{
+                    updateTurn();
+                    Thread.sleep(500);
+                }
+                catch (Exception e){
+
+                }
+            }
+        }
+        }).start();
 
         return view;
     }

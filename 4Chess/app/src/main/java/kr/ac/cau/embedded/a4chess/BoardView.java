@@ -13,6 +13,7 @@ import kr.ac.cau.embedded.a4chess.chess.Board;
 import kr.ac.cau.embedded.a4chess.chess.Coordinate;
 import kr.ac.cau.embedded.a4chess.chess.Game;
 import kr.ac.cau.embedded.a4chess.chess.pieces.Piece;
+import kr.ac.cau.embedded.a4chess.device.DeviceController;
 
 public class BoardView extends View {
 
@@ -31,8 +32,22 @@ public class BoardView extends View {
 
     public BoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        new Thread(new Runnable() { @Override public void run() {
+            while(true){
+                try{
+                    postInvalidate();
+                    Thread.sleep(500);
+                }
+                catch (Exception e){
+
+                }
+            }
+        }
+        }).start();
         doubleTapGestureDetector = new GestureDetector(context, new DoubleTapListener());
         BoardView.view = this;
+
+
     }
 
     @Override

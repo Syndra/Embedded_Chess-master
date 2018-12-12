@@ -81,5 +81,6 @@ public class ChessFragment extends Fragment {
         Coordinate selection = new Coordinate(beforeX, beforeY);
         Coordinate coordinate = new Coordinate(afterX, afterY);
         Board.move(Game.currentPlayer(), selection, coordinate);
+        boardView.postInvalidate();
     }
 }

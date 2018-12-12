@@ -19,29 +19,84 @@
             <ListView
                 android:id="@+id/chat_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="300dp"
                 android:divider="@null"
                 android:listSelector="@android:color/transparent"
                 android:transcriptMode="alwaysScroll" />
-
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="bottom|center"
-                android:orientation="horizontal"
-                android:layout_gravity="bottom">
-                <Button
-                    android:id="@+id/receive_btn"
+                android:orientation="vertical"
+                android:layout_gravity="bottom"
+                android:background="@android:color/holo_purple">
+                <!--<Button-->
+                <!--android:id="@+id/receive_btn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Test Receive"/>-->
+                <!--<Button-->
+                <!--android:id="@+id/send_btn"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="Test Send"/>-->
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Test Receive"/>
-                <Button
-                    android:id="@+id/send_btn"
+                    android:text="@string/macro1"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Test Send"/>
+                    android:text="@string/macro2"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macro3"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macro4"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macro5"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macro6"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macro7"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macro8"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/macro9"
+                    android:textSize="20dp"
+                    android:textColor="#000000"/>
             </LinearLayout>
         </FrameLayout>
     </LinearLayout>

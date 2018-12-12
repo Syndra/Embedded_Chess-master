@@ -102,15 +102,18 @@ public class ChatFragment extends Fragment {
         if (oldPlayerNum == receivedPlayerNum && oldMessage.equals(receivedMessage)) {
             return;
         }
+
         Log.d("chat test", "" + oldPlayerNum);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                oldPlayerNum = receivedPlayerNum;
-                oldMessage = receivedMessage;
-                ChatMessage chatMessage = new ChatMessage("Player" + Integer.toString(receivedPlayerNum) + " : " + receivedMessage, true);
-                chatMessages.add(chatMessage);
-                adapter.notifyDataSetChanged();
+                if (MainActivity.nickName.charAt(6) != '0' + receivedPlayerNum) {
+                    oldPlayerNum = receivedPlayerNum;
+                    oldMessage = receivedMessage;
+                    ChatMessage chatMessage = new ChatMessage("Player" + Integer.toString(receivedPlayerNum) + " : " + receivedMessage, false);
+                    chatMessages.add(chatMessage);
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
@@ -161,16 +164,16 @@ public class ChatFragment extends Fragment {
         }
 
         if (MainActivity.nickName == "Player1") {
-            // ((MainActivity) getActivity()).serverSend();
+            ((MainActivity) getActivity()).serverSend(message + "(info_mesg)");
         }
         else {
-            // ((MainActivity) getActivity()).clientSend();
+            ((MainActivity) getActivity()).clientSend(message + "(info_mesg)");
         }
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ChatMessage chatMessage = new ChatMessage("Player1 : " + message, true);
+                ChatMessage chatMessage = new ChatMessage(MainActivity.nickName + " : " + message, true);
                 chatMessages.add(chatMessage);
                 adapter.notifyDataSetChanged();
             }

@@ -260,7 +260,7 @@ public class Board_ConditionChecker {
                 if(Board.getPiece(new Coordinate(i,j)) == null){
                     continue;
                 }
-                if(Board.getPiece(new Coordinate(i, j)).getPlayerId() == PlayerId
+                if(Board.getPiece(new Coordinate(i, j)).getPlayerId().equals(PlayerId)
                         && Board.getPiece(new Coordinate(i, j)) instanceof King){
                     return Board.getPiece(new Coordinate(i, j));
                 }
