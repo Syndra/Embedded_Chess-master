@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChessFragment">
+
+    <kr.ac.cau.embedded.a4chess.BoardView
+        android:id="@+id/frag_board"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </kr.ac.cau.embedded.a4chess.BoardView>
+
+</FrameLayout>

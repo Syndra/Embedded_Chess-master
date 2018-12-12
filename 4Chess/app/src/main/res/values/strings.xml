@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">4Chess</string>
+    <string name="make_room">Make Room</string>
+    <string name="enjoy_room">Enjoy Room</string>
+    <string name="input_ip">Input Room IP</string>
+    <string name="room_ip">Room IP :</string>
+
+    <string name="gameover">Game Over</string>
+
+    <string name="start">START</string>
+    <string name="qcastling">QCASTLING</string>
+    <string name="kcastling">KCASTLING</string>
+
+    <string name="macro1">1.Hello!</string>
+    <string name="macro2">2.Nice to meet you!</string>
+    <string name="macro3">3.Nice job!</string>
+    <string name="macro4">4.Good try!</string>
+    <string name="macro5">5.Oops~!</string>
+    <string name="macro6">6.I am so sorry!</string>
+    <string name="macro7">7.Help me!</string>
+    <string name="macro8">8.Hurry up!</string>
+    <string name="macro9">9.Goodbye~!</string>
+
+    <string name="ok">OK</string>
+    <string name="close">CLOSE</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
