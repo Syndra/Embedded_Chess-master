@@ -25,7 +25,7 @@ public class Game {
 
     public static SsegPrintTime writeTimer;
 
-    public static int turnTime = 60;
+    public static int turnTime = 13;
 
     public static int getPlayerColor(String id) {
         return getPlayer(id).color;

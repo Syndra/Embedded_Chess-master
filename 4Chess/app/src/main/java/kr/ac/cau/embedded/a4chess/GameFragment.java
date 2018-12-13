@@ -113,10 +113,19 @@ public class GameFragment extends Fragment {
     }
 
     public void gameOverLocal(final Player winnerPlayer) {
+
+        if(Game.deadPlayers.contains(Game.myPlayerId))
+        {
+            DotPrintCurrentCondition.run(DotPrintCurrentCondition.LOSE);
+        }
+        else {
+            DotPrintCurrentCondition.run(DotPrintCurrentCondition.WIN);
+        }
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //DotPrintCurrentCondition.run(DotPrintCurrentCondition.WIN);
+
 
                 AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
                         getContext());
@@ -134,7 +143,6 @@ public class GameFragment extends Fragment {
                                 // current activity
                                 ((MainActivity) getActivity()).finish();
                                 Intent intent = new Intent(getContext(), MainActivity.class);
-                                startActivity(intent);
                             }
                         });
 

@@ -44,7 +44,7 @@ public class SsegPrintTime {
             this.leftTime = -10;
             Board.move(Game.myPlayerId, new Coordinate(-1000, 0), new Coordinate(0,0));
             BoardView.procNum++;
-            String gameMsg = Integer.toString(BoardView.procNum) + "#";
+            String gameMsg = Game.myPlayerId + "#";
             gameMsg += Integer.toString(-1000) + "#" + Integer.toString(0) + "#";
             gameMsg += Integer.toString(0) + "#" + Integer.toString(0) + "(info_game)";
             if (MainActivity.nickName == "Player1") {

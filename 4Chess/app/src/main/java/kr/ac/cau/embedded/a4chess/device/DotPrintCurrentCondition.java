@@ -33,6 +33,11 @@ public class DotPrintCurrentCondition {
 
     public static void condCheckAndPrint()
     {
+        if(Game.deadPlayers.contains(Game.myPlayerId))
+        {
+            return;
+        }
+
         if(Board_ConditionChecker.isPlyaerChecked(Game.myPlayerId)){
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
