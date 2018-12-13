@@ -3,8 +3,12 @@ package kr.ac.cau.embedded.a4chess.chess;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import kr.ac.cau.embedded.a4chess.GameFragment;
+import kr.ac.cau.embedded.a4chess.device.BuzzerAlarm;
+import kr.ac.cau.embedded.a4chess.device.DotPrintCurrentCondition;
 import kr.ac.cau.embedded.a4chess.device.LcdPrintTurn;
 import kr.ac.cau.embedded.a4chess.device.DeviceThreadController;
 import kr.ac.cau.embedded.a4chess.device.SsegPrintTime;
@@ -84,7 +88,7 @@ public class Game {
             UI.updateTurn();
         }
 
-        //LcdPrintTurn.write();
+        DotPrintCurrentCondition.condCheckAndPrint();
     }
 
     public static void over() {
