@@ -76,10 +76,10 @@ public class Game {
     public static void moved() {
         writeTimer.setTime(Game.turnTime);
         turns++;
-        String next = players[turns % players.length].id;
+        String next = players[(4-(turns % players.length))%4].id;
         while (deadPlayers.contains(next)) {
             turns++; // skip dead players
-            next = players[turns % players.length].id;
+            next = players[(4-(turns % players.length))%4].id;
         }
         if (next.startsWith("AutoMatch_")) {
             next = null;
@@ -103,7 +103,7 @@ public class Game {
     }
 
     public static String currentPlayer() {
-        return players[turns % players.length].id;
+        return players[(4-(turns % players.length))%4].id;
     }
 
     public static boolean myTurn() {

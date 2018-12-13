@@ -164,7 +164,7 @@ public class RoomFragment extends Fragment {
     public static void playerStatus() {
         if(playerItems.size() != currentPlayerNum) {
             for(int i = playerItems.size(); i < currentPlayerNum; i++) {
-                Player player = new Player(playerNum.toString(), playerNum / 2,
+                Player player = new Player(playerNum.toString(), playerNum % 2,
                         PLAYER_COLOR[playerNum], "Player" + (++playerNum), " ");
                 playerItems.add(player);
                 playerListAdapter.notifyDataSetChanged();
