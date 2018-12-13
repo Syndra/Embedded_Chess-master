@@ -12,6 +12,7 @@ public class MotorRun {
             @Override
             public void run()
             {
+                DeviceSemaphore.motor_init();
                 DeviceController.MotorWrite(0);
                 try {
                     Thread.sleep(3000);
@@ -19,6 +20,7 @@ public class MotorRun {
                     e.printStackTrace();
                 }
                 DeviceController.MotorWrite(768);
+                DeviceSemaphore.motor_deinit();
             }
         };
 

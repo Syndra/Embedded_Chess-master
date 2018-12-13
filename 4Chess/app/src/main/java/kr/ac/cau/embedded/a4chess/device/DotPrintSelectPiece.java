@@ -15,6 +15,8 @@ public class DotPrintSelectPiece {
 
     public static void PrintSelectPiece(Piece currentPiece)
     {
+        DeviceSemaphore.dot_init();
+
         //pawn
         if(currentPiece instanceof Pawn || currentPiece instanceof LeftPawn || currentPiece instanceof RightPawn || currentPiece instanceof DownPawn) {
             DeviceController.DotmatrixWrite(1);
@@ -39,5 +41,7 @@ public class DotPrintSelectPiece {
         else if(currentPiece instanceof King) {
             DeviceController.DotmatrixWrite(6);
         }
+
+        DeviceSemaphore.dot_deinit();
     }
 }

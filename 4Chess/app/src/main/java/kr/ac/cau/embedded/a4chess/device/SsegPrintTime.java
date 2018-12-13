@@ -13,7 +13,7 @@ public class SsegPrintTime {
         this.leftTime = leftTime;
     }
 
-    public void run(final int leftTime) {
+    public void run() {
         Timer timer = new Timer();
 
         task = new TimerTask(){
@@ -33,5 +33,10 @@ public class SsegPrintTime {
         leftTime--;
         if(leftTime < 0)
             this.task.cancel();
+    }
+
+    public void setTime(int leftTime){
+
+       this.leftTime = leftTime;
     }
 }

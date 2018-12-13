@@ -12,7 +12,9 @@ public class BuzzerAlarm {
             @Override
             public void run()
             {
+                DeviceSemaphore.buzzer_init();
                 DeviceController.BuzzerWrite(1);
+                DeviceSemaphore.buzzer_deinit();
             }
         };
 
