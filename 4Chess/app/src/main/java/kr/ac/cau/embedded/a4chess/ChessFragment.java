@@ -24,6 +24,8 @@ public class ChessFragment extends Fragment {
     public static int currentPlayer = -2;
     public static int beforeX, beforeY;
     public static int afterX, afterY;
+    public static boolean castIf = false;
+    public static String castUpdate = "R5";
 
     private View boardView;
 
@@ -61,6 +63,7 @@ public class ChessFragment extends Fragment {
             while(true){
                 try{
                     board_update_display();
+                    cast_update_display();
                     Thread.sleep(200);
                 }
                 catch (Exception e){
@@ -82,5 +85,20 @@ public class ChessFragment extends Fragment {
         Coordinate coordinate = new Coordinate(afterX, afterY);
         Board.move(Game.currentPlayer(), selection, coordinate);
         boardView.postInvalidate();
+    }
+
+    private void cast_update_display() {
+        if (!castIf) {
+            return;
+        }
+        castIf = false;
+        if (castUpdate.charAt(0) == 'Q') {
+            Board.queenSideCastling(castUpdate.substring(1));
+            boardView.postInvalidate();
+        }
+        else if (castUpdate.charAt(0) == 'K') {
+            Board.kingSideCastling(castUpdate.substring(1));
+            boardView.postInvalidate();
+        }
     }
 }

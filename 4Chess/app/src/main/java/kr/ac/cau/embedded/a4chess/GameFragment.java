@@ -1,6 +1,10 @@
 package kr.ac.cau.embedded.a4chess;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,6 +20,8 @@ import kr.ac.cau.embedded.a4chess.chess.Board;
 import kr.ac.cau.embedded.a4chess.chess.Board_ConditionChecker;
 import kr.ac.cau.embedded.a4chess.chess.Game;
 import kr.ac.cau.embedded.a4chess.chess.Player;
+import kr.ac.cau.embedded.a4chess.device.DeviceController;
+import kr.ac.cau.embedded.a4chess.device.DotPrintCurrentCondition;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,8 +35,6 @@ public class GameFragment extends Fragment {
     private TextView gameStatusView;
     private static Button queenSideCastlingButton;
     private static Button kingSideCastlingButton;
-    public static boolean castIf = false;
-    public static String castUpdate;
 
     public GameFragment() {
         // Required empty public constructor
@@ -105,52 +109,61 @@ public class GameFragment extends Fragment {
             }
         });
 
-        new Thread(new Runnable() { @Override public void run() {
-            while(true){
-                try{
-                    updateTurn();
-                    if (castIf) {
-                        if (castUpdate.charAt(0) == 'Q') {
-                            Board.queenSideCastling(castUpdate.substring(1));
-                            BoardView.view.invalidate();
-                        }
-                        else if (castUpdate.charAt(0) == 'K') {
-                            Board.kingSideCastling(castUpdate.substring(1));
-                            BoardView.view.invalidate();
-                        }
-                        castIf = false;
-                    }
-                    Thread.sleep(500);
-                }
-                catch (Exception e){
-
-                }
-            }
-        }
-        }).start();
-
         return view;
     }
 
     public void gameOverLocal(final Player winnerPlayer) {
-        gameStatusView.setText(getString(R.string.gameover) + "\n" +
-                "Team " + String.valueOf(winnerPlayer.team));
-        getActivity().getSharedPreferences("localMatches", Context.MODE_PRIVATE).edit()
-                .remove("match_" + Game.match.matchId).commit();
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                //DotPrintCurrentCondition.run(DotPrintCurrentCondition.WIN);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                        getContext());
+
+                // set title
+                alertDialogBuilder.setTitle("Game Over");
+
+                // set dialog message
+                alertDialogBuilder
+                        .setMessage("Go To Home?")
+                        .setCancelable(false)
+                        .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,int id) {
+                                // if this button is clicked, close
+                                // current activity
+                                ((MainActivity) getActivity()).finish();
+                                Intent intent = new Intent(getContext(), MainActivity.class);
+                                startActivity(intent);
+                            }
+                        });
+
+                // create alert dialog
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                // show it
+                alertDialog.show();
+            }
+        });
     }
 
     public void updateTurn() {
-        StringBuilder stringBuilder = new StringBuilder();
-        String current = Game.players[Game.turns % Game.players.length].id;
-        for (Player p : Game.players) {
-            stringBuilder.append("<font color='")
-                    .append(String.format("#%06X", (0xFFFFFF & Game.getPlayerColor(p.id))))
-                    .append("'>");
-            if (p.id.equals(current)) stringBuilder.append("-> ");
-            stringBuilder.append(p.name).append(" [").append(p.team).append("]</font><br />");
-        }
-        stringBuilder.delete(stringBuilder.lastIndexOf("<br />"), stringBuilder.length());
-        gameStatusView.setText(Html.fromHtml(stringBuilder.toString()));
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                StringBuilder stringBuilder = new StringBuilder();
+                String current = Game.players[Game.turns % Game.players.length].id;
+                for (Player p : Game.players) {
+                    stringBuilder.append("<font color='")
+                            .append(String.format("#%06X", (0xFFFFFF & Game.getPlayerColor(p.id))))
+                            .append("'>");
+                    if (p.id.equals(current)) stringBuilder.append("-> ");
+                    stringBuilder.append(p.name).append(" [").append(p.team).append("]</font><br />");
+                }
+                stringBuilder.delete(stringBuilder.lastIndexOf("<br />"), stringBuilder.length());
+                gameStatusView.setText(Html.fromHtml(stringBuilder.toString()));
+                gameStatusView.postInvalidate();
+            }
+        });
     }
 
     // King Castling Button Change Visibility

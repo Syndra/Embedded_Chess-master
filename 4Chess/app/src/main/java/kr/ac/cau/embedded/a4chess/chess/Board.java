@@ -3,7 +3,6 @@ package kr.ac.cau.embedded.a4chess.chess;
 import android.util.Log;
 import android.util.Pair;
 
-import kr.ac.cau.embedded.a4chess.GameFragment;
 import kr.ac.cau.embedded.a4chess.chess.pieces.Bishop;
 import kr.ac.cau.embedded.a4chess.chess.pieces.DownPawn;
 import kr.ac.cau.embedded.a4chess.chess.pieces.King;
@@ -14,7 +13,9 @@ import kr.ac.cau.embedded.a4chess.chess.pieces.Piece;
 import kr.ac.cau.embedded.a4chess.chess.pieces.Queen;
 import kr.ac.cau.embedded.a4chess.chess.pieces.RightPawn;
 import kr.ac.cau.embedded.a4chess.chess.pieces.Rook;
+import kr.ac.cau.embedded.a4chess.device.BuzzerAlarm;
 import kr.ac.cau.embedded.a4chess.device.LcdPrintTurn;
+import kr.ac.cau.embedded.a4chess.device.SsegPrintTime;
 
 public class Board {
     private static Piece[][] BoardState;
@@ -24,7 +25,10 @@ public class Board {
     private static Coordinate LastOld;
     private static Coordinate LastNew;
 
-    private Board() { }
+    public static SsegPrintTime timerWrite;
+
+    private Board() {
+    }
 
     public static int getBoardSize() {
         return boardSize;
@@ -101,6 +105,19 @@ public class Board {
             return false;
         }
 
+        if(oldPosition.x == -1000)
+        {
+            if(Game.removePlayer(PlayerId))
+            {
+                Game.over();
+            }
+            else {
+                Game.moved();
+            }
+            //자살
+            return true;
+        }
+
         if (!newPosition.isValid()) {
             return false; // not a valid new position
         }
@@ -112,7 +129,15 @@ public class Board {
 
         Piece target = BoardState[newPosition.x][newPosition.y];
 
-        // Castling
+        // Check invalid move (Make Player also CHECK!)
+        Board.test_move(oldPosition, newPosition);
+        if(Board_ConditionChecker.isPlyaerChecked(PlayerId)) {
+            Board.test_retreat();
+            return false;
+        }
+        else {
+            Board.test_retreat();
+        }
 
         // move the piece
         BoardState[newPosition.x][newPosition.y] = BoardState[oldPosition.x][oldPosition.y];
@@ -134,10 +159,6 @@ public class Board {
         {
             Log.d("CHECK", "Player " + elem.id +  " is under " + Board_ConditionChecker.checkPlayerCondition(elem.id));
         }
-
-        LcdPrintTurn.write();
-//        GameFragment.changeVisibleKingSideCastling();
-//        GameFragment.changeVisibleQueenSideCastling();
 
         return true;
     }
@@ -230,11 +251,38 @@ public class Board {
         LastNew = newPosition;
     }
 
+    public static void test_move(final Coordinate oldPosition, final Coordinate newPosition, Piece[][] board) {
+
+        Piece piece = board[oldPosition.x][oldPosition.y];
+        Piece target = board[newPosition.x][newPosition.y];
+
+        // move the piece
+        board[newPosition.x][newPosition.y] = board[oldPosition.x][oldPosition.y];
+        board[oldPosition.x][oldPosition.y] = null;
+        piece.position = newPosition;
+
+        LastDeletes = target;
+        LastOld = oldPosition;
+        LastNew = newPosition;
+    }
+
     public static void test_retreat() {
         Piece piece = BoardState[LastNew.x][LastNew.y];
 
         BoardState[LastOld.x][LastOld.y] = BoardState[LastNew.x][LastNew.y];
         BoardState[LastNew.x][LastNew.y] = LastDeletes;
+        piece.position = LastOld;
+
+        LastDeletes = null;
+        LastOld = null;
+        LastNew = null;
+    }
+
+    public static void test_retreat(Piece[][] board) {
+        Piece piece = board[LastNew.x][LastNew.y];
+
+        board[LastOld.x][LastOld.y] = board[LastNew.x][LastNew.y];
+        board[LastNew.x][LastNew.y] = LastDeletes;
         piece.position = LastOld;
 
         LastDeletes = null;

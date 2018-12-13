@@ -338,10 +338,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private static void inputMsgCast(String s) {
-        if (GameFragment.castUpdate.equals(s.substring(10))) {
+        if (ChessFragment.castUpdate.equals(s.substring(10))) {
             return;
         }
-        GameFragment.castIf = true;
-        GameFragment.castUpdate = s.substring(10);
+        ChessFragment.castIf = true;
+        ChessFragment.castUpdate = s.substring(10);
     }
 }

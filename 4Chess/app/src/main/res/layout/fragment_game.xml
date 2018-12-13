@@ -28,6 +28,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="2dp"
                 android:textAlignment="center"
+                android:textColor="@android:color/black"
                 android:textStyle="bold"/>
             <LinearLayout
                 android:layout_width="wrap_content"

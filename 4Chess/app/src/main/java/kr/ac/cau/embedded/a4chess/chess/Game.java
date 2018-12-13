@@ -1,12 +1,13 @@
 package kr.ac.cau.embedded.a4chess.chess;
 
-import android.graphics.Color;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import kr.ac.cau.embedded.a4chess.GameFragment;
+import kr.ac.cau.embedded.a4chess.device.LcdPrintTurn;
+import kr.ac.cau.embedded.a4chess.device.DeviceThreadController;
+import kr.ac.cau.embedded.a4chess.device.SsegPrintTime;
 
 public class Game {
     public static Match match;
@@ -16,7 +17,11 @@ public class Game {
 
     public static GameFragment UI;
 
-    private static List<String> deadPlayers;
+    public static List<String> deadPlayers;
+
+    public static SsegPrintTime writeTimer;
+
+    public static int turnTime = 60;
 
     public static int getPlayerColor(String id) {
         return getPlayer(id).color;
@@ -44,6 +49,10 @@ public class Game {
         deadPlayers = new LinkedList<String>();
         createPlayers(playerList);
         Board.newGame(players);
+
+        writeTimer = new SsegPrintTime(Game.turnTime);
+        writeTimer.run();
+        DeviceThreadController.run();
     }
 
     private static void createPlayers(final ArrayList<Player> playerList) {
@@ -61,6 +70,7 @@ public class Game {
     }
 
     public static void moved() {
+        writeTimer.setTime(Game.turnTime);
         turns++;
         String next = players[turns % players.length].id;
         while (deadPlayers.contains(next)) {
@@ -73,6 +83,8 @@ public class Game {
         if (UI != null) {
             UI.updateTurn();
         }
+
+        //LcdPrintTurn.write();
     }
 
     public static void over() {
@@ -101,6 +113,7 @@ public class Game {
             return true;
         }
         return false;
+//        return  true;
     }
 
     public static boolean sameTeam(final String id1, final String id2) {

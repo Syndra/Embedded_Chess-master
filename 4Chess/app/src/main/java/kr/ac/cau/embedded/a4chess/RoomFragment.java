@@ -101,7 +101,6 @@ public class RoomFragment extends Fragment {
         }
         }).start();
 
-
         testButton.setOnClickListener(new View.OnClickListener() { // Test
             @Override
             public void onClick(View v) { //★★ TODO : May be refresh button OR Update Directly

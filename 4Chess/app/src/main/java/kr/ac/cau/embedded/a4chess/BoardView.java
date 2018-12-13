@@ -13,7 +13,13 @@ import kr.ac.cau.embedded.a4chess.chess.Board;
 import kr.ac.cau.embedded.a4chess.chess.Coordinate;
 import kr.ac.cau.embedded.a4chess.chess.Game;
 import kr.ac.cau.embedded.a4chess.chess.pieces.Piece;
+import kr.ac.cau.embedded.a4chess.device.BuzzerAlarm;
 import kr.ac.cau.embedded.a4chess.device.DeviceController;
+import kr.ac.cau.embedded.a4chess.device.DotPrintCurrentCondition;
+import kr.ac.cau.embedded.a4chess.device.DotPrintSelectPiece;
+import kr.ac.cau.embedded.a4chess.device.LcdPrintTurn;
+import kr.ac.cau.embedded.a4chess.device.MotorRun;
+import kr.ac.cau.embedded.a4chess.device.SsegPrintTime;
 
 public class BoardView extends View {
 
@@ -28,7 +34,7 @@ public class BoardView extends View {
     private float scaleFactor = 1.0f;
     private float focusX = 0;
     private float focusY = 0;
-    private int procNum = 0; // Procedure Number - avoid duplication & may check whose turn now
+    static public int procNum = 0; // Procedure Number - avoid duplication & may check whose turn now
 
     public BoardView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -114,9 +120,11 @@ public class BoardView extends View {
                     Board.getPiece(coordinate).getPlayerId().equals(Game.myPlayerId)) {
                 selection = coordinate;
                 invalidate();
+                DotPrintSelectPiece.PrintSelectPiece(Board.getPiece(coordinate));
             } else {
                 if (selection != null) { // we have a piece selected and clicked on a new position
                     if (Board.move(Game.myPlayerId, selection, coordinate)) { // gameMsg ex : "1 0 0 2 3(info_game)"
+
                         procNum++;
                         String gameMsg = Integer.toString(procNum) + "#";
                         gameMsg += Integer.toString(selection.x) + "#" + Integer.toString(selection.y) + "#";
