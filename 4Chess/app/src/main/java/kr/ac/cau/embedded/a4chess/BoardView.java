@@ -126,7 +126,7 @@ public class BoardView extends View {
                     if (Board.move(Game.myPlayerId, selection, coordinate)) { // gameMsg ex : "1 0 0 2 3(info_game)"
 
                         procNum++;
-                        String gameMsg = Integer.toString(procNum) + "#";
+                        String gameMsg = Game.myPlayerId + "#";
                         gameMsg += Integer.toString(selection.x) + "#" + Integer.toString(selection.y) + "#";
                         gameMsg += Integer.toString(coordinate.x) + "#" + Integer.toString(coordinate.y) + "(info_game)";
                         if (MainActivity.nickName == "Player1") {

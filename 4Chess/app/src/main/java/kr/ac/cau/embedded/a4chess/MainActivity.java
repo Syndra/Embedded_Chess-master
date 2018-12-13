@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 //        System.loadLibrary("native-lib");
 //    }
 
+    public static int singleton = 0;
+
     private static final int SERVER_TEXT_UPDATE = 100;
     private static final int CLIENT_TEXT_UPDATE = 200;
     public static final int port = 9988;
@@ -156,42 +158,46 @@ public class MainActivity extends AppCompatActivity {
                         player_num = clientsMap.size() + 2;
                         handler.sendEmptyMessage(SERVER_TEXT_UPDATE);
 
-                        new Thread(new Runnable() {
-                            private DataInputStream in;
-                            private DataOutputStream out;
-                            private String nick;
-                            private String p_num;
+                        if(MainActivity.singleton == 0 || MainActivity.singleton != player_num)
+                        {
+                            new Thread(new Runnable() {
+                                private DataInputStream in;
+                                private DataOutputStream out;
+                                private String nick;
+                                private String p_num;
 
-                            @Override
-                            public void run() {
-                                try { // setting
-                                    out = new DataOutputStream(socket.getOutputStream());
-                                    in = new DataInputStream(socket.getInputStream());
-                                    nick = "Player" + Integer.toString(player_num);
-                                    addClient(nick, out);
-                                    RoomFragment.clientIP = msg;
-                                    RoomFragment.playerIn++; // ★★ TODO call update RoomFrag.
-                                    p_num = Integer.toString(player_num);
-                                    sendMessage(p_num + "(info_client)");
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                try { // keep receiving state
-                                    while (in != null) {
-                                        msg = in.readUTF();
-                                        sendMessage(msg);
-                                        handler.sendEmptyMessage(SERVER_TEXT_UPDATE);
+                                @Override
+                                public void run() {
+                                    try { // setting
+                                        out = new DataOutputStream(socket.getOutputStream());
+                                        in = new DataInputStream(socket.getInputStream());
+                                        nick = "Player" + Integer.toString(player_num);
+                                        addClient(nick, out);
+                                        RoomFragment.clientIP = msg;
+                                        RoomFragment.playerIn++; // ★★ TODO call update RoomFrag.
+                                        p_num = Integer.toString(player_num);
+                                        sendMessage(p_num + "(info_client)");
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
                                     }
-                                } catch (IOException e) {
-                                    // disconnect -> removeClient
-                                    removeClient(nick);
+
+                                    try { // keep receiving state
+                                        while (in != null) {
+                                            msg = in.readUTF();
+                                            sendMessage(msg);
+                                            handler.sendEmptyMessage(SERVER_TEXT_UPDATE);
+                                        }
+                                    } catch (IOException e) {
+                                        // disconnect -> removeClient
+                                        removeClient(nick);
+                                    }
                                 }
-                            }
-                        }).start();
+                            }).start();
+                        }
                     }
                 }
             }).start();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -295,13 +301,13 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    else if (clientMsg.charAt(tokenIndex + 6) == 'g') { // game status (TAG : (info_game))
+                    else if (clientMsg.charAt(tokenIndex + 6) == 'g' && !(clientMsg.substring(0, 7).equals(nickName))) { // game status (TAG : (info_game))
                         inputMsgGame(clientMsg.substring(clientMsg.lastIndexOf('P'), tokenIndex));
                     }
                     else if (clientMsg.charAt(tokenIndex + 6) == 'm') { // chat status (TAG : (info_mesg))
                         inputMsgChat(clientMsg.substring(clientMsg.lastIndexOf('P'), tokenIndex));
                     }
-                    else if (clientMsg.charAt(tokenIndex + 6) == 'Q') { // other status (Add by needs)
+                    else if (clientMsg.charAt(tokenIndex + 6) == 'Q' && !(clientMsg.substring(0, 7).equals(nickName))) { // other status (Add by needs)
                         inputMsgCast(clientMsg.substring(clientMsg.lastIndexOf('P'), tokenIndex));
                     }
                     clientMsgBuilder.append(clientMsg); // MSG LOG DISPLAY (TEST)

@@ -43,6 +43,12 @@ public class Board_ConditionChecker {
         //check all enemy piece's possiblemoves.
         //If possiblemoves list contains currentplayerking coordinate, current player is determined
         //being under check condition.
+
+        String myId = Game.myPlayerId;
+        Integer a = new Integer(myId);
+        a = (a+3)%4;
+        String prevId = a.toString();
+
         for(int i = 0 ; i < Board.getBoardSize(); i ++) {
             for(int j = 0; j < Board.getBoardSize(); j++) {
                 if(Board.getPiece(new Coordinate(i,j)) == null){

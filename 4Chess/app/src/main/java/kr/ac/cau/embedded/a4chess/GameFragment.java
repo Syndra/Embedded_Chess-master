@@ -114,7 +114,15 @@ public class GameFragment extends Fragment {
 
     public void gameOverLocal(final Player winnerPlayer) {
 
-        if(Game.deadPlayers.contains(Game.myPlayerId))
+        int winnerTeam = 0;
+
+        for(Player elem : Game.players)
+        {
+            if(!Game.deadPlayers.contains(elem))
+                winnerTeam = elem.team;
+        }
+
+        if(Game.getPlayer(Game.myPlayerId).team != winnerTeam)
         {
             DotPrintCurrentCondition.run(DotPrintCurrentCondition.LOSE);
         }

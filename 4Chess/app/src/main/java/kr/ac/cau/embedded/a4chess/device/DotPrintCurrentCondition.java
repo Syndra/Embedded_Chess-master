@@ -38,7 +38,7 @@ public class DotPrintCurrentCondition {
             return;
         }
 
-        if(Board_ConditionChecker.isPlyaerChecked(Game.myPlayerId)){
+        if(Board_ConditionChecker.isPlyaerChecked(Game.myPlayerId) && ! Board_ConditionChecker.isCheckMated(Game.myPlayerId)){
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
                 @Override
@@ -48,10 +48,9 @@ public class DotPrintCurrentCondition {
                 }
             };
             timer.schedule(task, 50);
-            DeviceThreadController.isAlreadyPrinted = true;
             return;
         }
-        else if(Board_ConditionChecker.isCheckMated(Game.myPlayerId) && DeviceThreadController.isAlreadyPrinted){
+        else if(Board_ConditionChecker.isCheckMated(Game.myPlayerId)){
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
                 @Override
@@ -61,10 +60,9 @@ public class DotPrintCurrentCondition {
                 }
             };
             timer.schedule(task, 50);
-            DeviceThreadController.isAlreadyPrinted = true;
             return;
         }
-        else if(Board_ConditionChecker.isStaleMated(Game.myPlayerId) && DeviceThreadController.isAlreadyPrinted){
+        else if(Board_ConditionChecker.isStaleMated(Game.myPlayerId)){
             Timer timer = new Timer();
             TimerTask task = new TimerTask() {
                 @Override
@@ -74,7 +72,6 @@ public class DotPrintCurrentCondition {
                 }
             };
             timer.schedule(task, 50);
-            DeviceThreadController.isAlreadyPrinted = true;
             return;
         }
         else if(Game.isGameOver()) {
@@ -87,7 +84,6 @@ public class DotPrintCurrentCondition {
                     }
                 };
                 timer.schedule(task, 50);
-                DeviceThreadController.isAlreadyPrinted = true;
                 return;
             }
             else {
@@ -99,7 +95,6 @@ public class DotPrintCurrentCondition {
                     }
                 };
                 timer.schedule(task, 50);
-                DeviceThreadController.isAlreadyPrinted = true;
                 return;
             }
 

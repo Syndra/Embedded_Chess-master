@@ -52,14 +52,14 @@ public class Board {
         // setup player 1 (bottom)
         setupPlayerTopBottom(3, 1, 0, players[0].id);
 
-        // setup player 2 (right)
-        setupPlayerLeftRight(boardSize - 2, boardSize - 1, players[1].id);
+        // setup player 2 (left)
+        setupPlayerLeftRight(1, 0, players[1].id);
 
         // setup player 3 (top)
         setupPlayerTopBottom(3, boardSize - 2, boardSize - 1, players[2].id);
 
-        // setup player 4 (left)
-        setupPlayerLeftRight(1, 0, players[3].id);
+        // setup player 4 (right)
+        setupPlayerLeftRight(boardSize - 2, boardSize - 1, players[3].id);
 
         LcdPrintTurn.write();
     }

@@ -25,7 +25,7 @@ public class Game {
 
     public static SsegPrintTime writeTimer;
 
-    public static int turnTime = 13;
+    public static int turnTime = 60;
 
     public static int getPlayerColor(String id) {
         return getPlayer(id).color;
@@ -76,10 +76,10 @@ public class Game {
     public static void moved() {
         writeTimer.setTime(Game.turnTime);
         turns++;
-        String next = players[(4-(turns % players.length))%4].id;
+        String next = players[turns % players.length].id;
         while (deadPlayers.contains(next)) {
             turns++; // skip dead players
-            next = players[(4-(turns % players.length))%4].id;
+            next = players[turns % players.length].id;
         }
         if (next.startsWith("AutoMatch_")) {
             next = null;
@@ -103,7 +103,7 @@ public class Game {
     }
 
     public static String currentPlayer() {
-        return players[(4-(turns % players.length))%4].id;
+        return players[turns % players.length].id;
     }
 
     public static boolean myTurn() {

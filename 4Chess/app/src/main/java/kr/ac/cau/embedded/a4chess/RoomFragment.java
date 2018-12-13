@@ -28,9 +28,9 @@ public class RoomFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     private final static int[] PLAYER_COLOR = {
             Color.parseColor("#FF8800"),
-            Color.parseColor("#99CC00"),
+            Color.parseColor("#CC0000"),
             Color.parseColor("#33B5E5"),
-            Color.parseColor("#CC0000")
+            Color.parseColor("#99CC00")
     };
 
     public static ArrayList<Player> playerItems;
@@ -87,6 +87,7 @@ public class RoomFragment extends Fragment {
         listView.setAdapter(playerListAdapter);
 
         Button testButton = (Button)view.findViewById(R.id.test_button);
+        testButton.setVisibility(View.GONE);
 
         new Thread(new Runnable() { @Override public void run() {
             while(true){
@@ -106,7 +107,7 @@ public class RoomFragment extends Fragment {
             public void onClick(View v) { //★★ TODO : May be refresh button OR Update Directly
                 //((MainActivity) getActivity()).clientSend("test(info_mesg)"); // simple test
                 if(playerItems.size() < 4) {
-                    Player player = new Player(playerNum.toString(), playerNum / 2,
+                    Player player = new Player(playerNum.toString(), playerNum % 2,
                             PLAYER_COLOR[playerNum], "Player" + (++playerNum), clientIP.substring(1));
                     playerItems.add(player);
                     playerListAdapter.notifyDataSetChanged();
@@ -144,7 +145,7 @@ public class RoomFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Player player = new Player(playerNum.toString(), playerNum / 2,
+                    Player player = new Player(playerNum.toString(), playerNum % 2,
                             PLAYER_COLOR[playerNum], "Player" + (++playerNum), clientIP.substring(1));
                     playerItems.add(player);
                     playerListAdapter.notifyDataSetChanged();

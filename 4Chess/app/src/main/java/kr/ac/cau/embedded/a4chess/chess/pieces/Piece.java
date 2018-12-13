@@ -33,7 +33,7 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        Coordinate coordinate = new Coordinate(position.x, position.y, (4 - Board.getRotation()) % 4);
+        Coordinate coordinate = new Coordinate(position.x, position.y, Board.getRotation());
         return coordinate.toString() + "," + playerId + "," + getClass().getSimpleName();
     }
 }
