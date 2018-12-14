@@ -41,7 +41,7 @@ public class DotPrintCurrentCondition {
     {
         for(int i = 0; i < Game.players.length; i++)
         {
-            if(Board_ConditionChecker.isStaleMated(Game.players[i].id)) {
+            if(Board_ConditionChecker.isStaleMated(Game.players[i].id) && !Game.deadPlayers.contains(Game.players[i].id)) {
             //if(true) {
                 Timer timer = new Timer();
                 TimerTask task = new TimerTask() {
