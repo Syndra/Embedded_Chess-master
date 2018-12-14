@@ -1,5 +1,6 @@
 package kr.ac.cau.embedded.a4chess;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -36,6 +37,8 @@ public class GameFragment extends Fragment {
     private static Button queenSideCastlingButton;
     private static Button kingSideCastlingButton;
 
+    public static Activity GameActivity = null;
+
     public GameFragment() {
         // Required empty public constructor
     }
@@ -71,6 +74,9 @@ public class GameFragment extends Fragment {
         // Inflate the layout for this fragment
         Game.UI = this;
         View view = inflater.inflate(R.layout.fragment_game, container, false);
+
+        GameFragment.GameActivity = getActivity();
+
         gameStatusView = (TextView) view.findViewById(R.id.game_status);
         queenSideCastlingButton = (Button) view.findViewById(R.id.queen_castling_button);
         queenSideCastlingButton.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +116,39 @@ public class GameFragment extends Fragment {
         });
 
         return view;
+    }
+
+    public void RunStaleMate() {
+        if(GameFragment.GameActivity != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                            getContext());
+
+                    // set title
+                    alertDialogBuilder.setTitle("DRAW! STALEMATE!");
+
+                    // set dialog message
+                    alertDialogBuilder
+                            .setMessage("Go To Home?")
+                            .setCancelable(false)
+                            .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    // if this button is clicked, close
+                                    // current activity
+                                    ((MainActivity) getActivity()).finish();
+                                    Intent intent = new Intent(getContext(), MainActivity.class);
+                                }
+                            });
+
+                    // create alert dialog
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    // show it
+                    alertDialog.show();
+                }
+            });
+        }
     }
 
     public void gameOverLocal(final Player winnerPlayer) {
